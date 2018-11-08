@@ -72,27 +72,26 @@ public class ServiceSDKUtils {
     }
 
     public static KnowledgeUI getKnowledgeUI(Context context, UserAccount userAccount) {
+        String COMMUNITY_URL = "https://help.doordash.com/dashers";
+        String CATEGORY_GROUP = "Communities";
+        String ROOT_CATEGORY = "Mobile";
+
         // Create a core configuration instance
-        KnowledgeConfiguration coreConfiguration = KnowledgeConfiguration.create(
-                getStringPref(context, KnowledgeSettingsActivity.KEY_COMMUNITY_URL,
-                        context.getString(R.string.pref_case_community_url_default)));
+        KnowledgeConfiguration coreConfiguration = KnowledgeConfiguration.create(COMMUNITY_URL);
 
         // If a user account is provided, configure knowledge as an authenticated user
-        if (userAccount != null) {
-            // Create a KnowledgeConfiguration object using the community URL and current user
-            coreConfiguration = KnowledgeConfiguration.builder(
-                    getStringPref(context, KnowledgeSettingsActivity.KEY_COMMUNITY_URL,
-                            context.getString(R.string.pref_case_community_url_default)))
-                    .withAuthConfig(authTokenProvider(userAccount), new MobileSdkUser(userAccount.getUserId()))
-                    .build();
-        }
+//        if (userAccount != null) {
+//            // Create a KnowledgeConfiguration object using the community URL and current user
+//            coreConfiguration = KnowledgeConfiguration.builder(
+//                    getStringPref(context, KnowledgeSettingsActivity.KEY_COMMUNITY_URL,
+//                            context.getString(R.string.pref_case_community_url_default)))
+//                    .withAuthConfig(authTokenProvider(userAccount), new MobileSdkUser(userAccount.getUserId()))
+//                    .build();
+//        }
 
         // Create a UI configuration instance from core instance
         KnowledgeUIConfiguration uiConfiguration = KnowledgeUIConfiguration.create(coreConfiguration,
-                getStringPref(context, KnowledgeSettingsActivity.KEY_DATA_CATEGORY_GROUP,
-                        context.getString(R.string.pref_kb_data_category_group_default)),
-                getStringPref(context, KnowledgeSettingsActivity.KEY_ROOT_DATA_CATEGORY,
-                        context.getString(R.string.pref_kb_root_data_category_default)));
+                CATEGORY_GROUP, ROOT_CATEGORY);
 
         return KnowledgeUI.configure(uiConfiguration);
     }

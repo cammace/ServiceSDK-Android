@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.salesforce.android.chat.core.internal.liveagent.ChatStateListener;
+import com.salesforce.android.service.common.utilities.logging.ServiceLogging;
 import com.salesforce.androidsdk.app.SalesforceSDKManager;
 import com.salesforce.snapinssdkexample.activities.MainActivity;
 
@@ -16,6 +17,9 @@ public class ServiceSDKApplication extends Application {
 
         // Initialize Salesforce Mobile SDK for authentication
         initializeSalesforceSDKManager(MainActivity.class);
+
+        ServiceLogging.addSink(ServiceLogging.LOG_CAT_SINK);
+        ServiceLogging.setLogLevel(ServiceLogging.LEVEL_TRACE);
 
         chatSessionListener = new ChatSessionListener(getApplicationContext());
     }
